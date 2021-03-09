@@ -1,0 +1,26 @@
+name: C/C++ CI
+
+on: push
+#    branches: [ $default-branch ]
+#  pull_request:
+#    branches: [ $default-branch ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: install
+      run: sudo travis/ubuntu.sh
+    - name: make autotools
+      run: make autotools
+    - name: configure
+      run: ./configure
+    - name: make
+      run: make
+    - name: sudo make install
+      run: make install
+    - name: run tests
+      run: cd /opt/ltp; sudo ./runltp
